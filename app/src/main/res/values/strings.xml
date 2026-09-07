@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Controle de Vendas</string>
+    <string name="hint_descricao">Descrição do Produto</string>
+    <string name="hint_quantidade">Quantidade</string>
+    <string name="hint_valor">Valor (R$)</string>
+    <string name="label_status">Status:</string>
+    <string name="ativo">Ativo</string>
+    <string name="inativo">Inativo</string>
+    <string name="disponivel">Disponível para pronta entrega</string>
+    <string name="unidade_medida">Unidade de Medida</string>
+    <string name="btn_salvar">Salvar</string>
+    <string name="btn_limpar">Limpar</string>
+
+    <!-- Mensagens -->
+    <string name="erro_descricao">Informe a descrição</string>
+    <string name="erro_quantidade">Informe a quantidade</string>
+    <string name="erro_valor">Informe o valor</string>
+    <string name="erro_status">Selecione o status do produto</string>
+    <string name="dados_limpos">Os campos foram limpos com sucesso!</string>
+    <string name="produto_salvo">Produto salvo com sucesso!</string>
+
+    <!-- Botões e Autoria -->
+    <string name="btn_adicionar">Adicionar</string>
+    <string name="btn_sobre">Sobre</string>
+    <string name="autor_nome">Cesar Soares de Oliveira</string>
+    <string name="autor_curso">Pós Tecnologias Java</string>
+    <string name="autor_email">cesarsoares.ti@gmail.com</string>
+    <string name="app_descricao">Controle de vendas de um confeiteiro autônomo</string>
+    <string name="instituicao">UTFPR</string>
+</resources>

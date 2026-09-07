@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastro de Produto"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Descrição -->
+        <EditText
+            android:id="@+id/etDescricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_descricao"
+            android:inputType="textCapSentences" />
+
+        <!-- Quantidade -->
+        <EditText
+            android:id="@+id/etQuantidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_quantidade"
+            android:inputType="number"
+            android:layout_marginTop="8dp" />
+
+        <!-- Valor -->
+        <EditText
+            android:id="@+id/etValor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_valor"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="8dp" />
+
+        <!-- RadioGroup para Status -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_status"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/rgStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rbAtivo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ativo" />
+            <RadioButton
+                android:id="@+id/rbInativo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inativo" />
+        </RadioGroup>
+
+        <!-- CheckBox -->
+        <CheckBox
+            android:id="@+id/cbDisponivel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/disponivel" />
+
+        <!-- Spinner -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unidade_medida"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/spUnidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <!-- Botões -->
+        <Button
+            android:id="@+id/btnSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/btn_salvar" />
+
+        <Button
+            android:id="@+id/btnLimpar"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_limpar" />
+
+    </LinearLayout>
+</ScrollView>
