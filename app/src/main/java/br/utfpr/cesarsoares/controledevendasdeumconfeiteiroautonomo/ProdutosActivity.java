@@ -82,9 +82,9 @@ public class ProdutosActivity extends AppCompatActivity {
         Produto produto = new Produto(descricao, quantidade, valor, unidade, status, isDisponivel);
 
         // Devolve o resultado para a Activity de Listagem
-        Intent intent = new Intent();
-        intent.putExtra("produto", produto);
-        setResult(RESULT_OK, intent);
+        Intent intentResposta = new Intent();
+        intentResposta.putExtra("produto", produto);
+        setResult(RESULT_OK, intentResposta);
         finish();
     }
 
