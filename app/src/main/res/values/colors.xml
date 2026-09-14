@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F8061E</color>
     <color name="redlight">#ED3535</color>
+    <color name="verde">#007685</color>
     <color name="transparent">#00F8F6F6</color>
 </resources>

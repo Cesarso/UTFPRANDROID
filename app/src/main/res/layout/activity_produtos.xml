@@ -91,20 +91,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp" />
 
-        <!-- Botões -->
-        <Button
-            android:id="@+id/btnSalvar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/btn_salvar" />
-
-        <Button
-            android:id="@+id/btnLimpar"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_limpar" />
-
     </LinearLayout>
 </ScrollView>

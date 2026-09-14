@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Está sendo passado pelo ArrayAdapter.-->
     <string-array name="unidades_array">
         <item>Unidade</item>
         <item>Quilograma (Kg)</item>

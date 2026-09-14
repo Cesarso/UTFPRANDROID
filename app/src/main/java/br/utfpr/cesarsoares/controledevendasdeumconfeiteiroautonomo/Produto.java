@@ -1,6 +1,7 @@
 package br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Produto implements Serializable {
     private String descricao;
@@ -38,6 +39,14 @@ public class Produto implements Serializable {
 
     public boolean isDisponivel() { return disponivel; }
     public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
+
+    //Comparator auxilia na ordenação da lista.
+    public static final Comparator<Produto> COMPARADOR_DESCRICAO = new Comparator<Produto>() {
+        @Override
+        public int compare(Produto p1, Produto p2) {
+            return p1.getDescricao().compareToIgnoreCase(p2.getDescricao());
+        }
+    };
 
     @Override
     public String toString() {
