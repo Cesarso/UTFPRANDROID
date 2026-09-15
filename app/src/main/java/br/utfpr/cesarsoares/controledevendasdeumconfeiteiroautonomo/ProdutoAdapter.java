@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 
 public class ProdutoAdapter extends BaseAdapter {
 
@@ -48,8 +47,9 @@ public class ProdutoAdapter extends BaseAdapter {
         TextView tvValor = convertView.findViewById(R.id.textViewValor);
 
         tvDescricao.setText(produto.getDescricao());
-        tvQuantidade.setText(String.format(Locale.getDefault(), "Qtd: %.2f %s", produto.getQuantidade(), produto.getUnidade()));
-        tvValor.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getValor()));
+        tvQuantidade.setText(context.getString(R.string.label_quantidade_adapter, 
+                produto.getQuantidade(), produto.getUnidade()));
+        tvValor.setText(context.getString(R.string.label_valor_adapter, produto.getValor()));
 
         return convertView;
     }

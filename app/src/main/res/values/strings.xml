@@ -1,30 +1,60 @@
 <resources>
-    <string name="app_name">Controle de Vendas</string>
-    <string name="hint_descricao">Descrição do Produto</string>
-    <string name="hint_quantidade">Quantidade</string>
-    <string name="hint_valor">Valor (R$)</string>
-    <string name="label_status">Status:</string>
-    <string name="ativo">Ativo</string>
-    <string name="inativo">Inativo</string>
-    <string name="disponivel">Disponível para pronta entrega</string>
-    <string name="unidade_medida">Unidade de Medida</string>
-    <string name="btn_salvar">Salvar</string>
-    <string name="btn_limpar">Limpar</string>
-
-    <!-- Mensagens -->
-    <string name="erro_descricao">Informe a descrição</string>
-    <string name="erro_quantidade">Informe a quantidade</string>
-    <string name="erro_valor">Informe o valor</string>
-    <string name="erro_status">Selecione o status do produto</string>
-    <string name="dados_limpos">Os campos foram limpos com sucesso!</string>
-    <string name="produto_salvo">Produto salvo com sucesso!</string>
-
-    <!-- Botões e Autoria -->
-    <string name="btn_adicionar">Adicionar</string>
-    <string name="btn_sobre">Sobre</string>
-    <string name="autor_nome">Cesar Soares de Oliveira</string>
-    <string name="autor_curso">Pós Tecnologias Java</string>
-    <string name="autor_email">cesarsoares.ti@gmail.com</string>
-    <string name="app_descricao">Controle de vendas de um confeiteiro autônomo</string>
+    <string name="autor_nome" translatable="false">Cesar Soares de Oliveira</string>
+    <string name="autor_curso">Java Technologies Post-Graduation</string>
+    <string name="autor_email" translatable="false">cesarsoares.ti@gmail.com</string>
+    <string name="app_descricao">This system is a sales tracking tool for a self-employed pastry chef</string>
     <string name="instituicao">UTFPR</string>
+    <string name="app_name">Sales Control</string>
+    <string name="hint_descricao">Product Description</string>
+    <string name="hint_quantidade">Quantity</string>
+    <string name="hint_valor">Price ($)</string>
+    <string name="label_status">Status:</string>
+    <string name="ativo">Active</string>
+    <string name="inativo">Inactive</string>
+    <string name="disponivel">Ready for delivery</string>
+    <string name="unidade_medida">Unit of Measurement</string>
+
+    <!-- Titles -->
+    <string name="title_sobre_autor">About the Developer</string>
+    <string name="title_lista_produto">Product List</string>
+    <string name="title_cadastro_produto">Add Product</string>
+    <string name="title_editar_produto">Edit Product</string>
+    <string name="title_dados_produto">Product Details</string>
+    <string name="title_produto">Product</string>
+    <string name="title_pedido">Order</string>
+    <string name="title_configuracoes">Settings</string>
+
+    <!-- Messages -->
+    <string name="erro_descricao">Enter the description</string>
+    <string name="erro_quantidade">Enter the quantity</string>
+    <string name="erro_valor">Enter the price</string>
+    <string name="erro_status">Select the product status</string>
+    <string name="dados_limpos">Fields cleared successfully!</string>
+    <string name="produto_salvo">Product saved successfully!</string>
+    <string name="produto_excluido">Product deleted successfully!</string>
+    <string name="mensagem_produto_clicado">Product: %1$s\nPrice: $ %2$.2f</string>
+
+    <!-- Buttons and Labels -->
+    <string name="btn_adicionar">Add</string>
+    <string name="btn_salvar">Save</string>
+    <string name="btn_limpar">Clear</string>
+    <string name="btn_sobre">About</string>
+    <string name="menu_configuracoes">Settings</string>
+    <string name="menu_editar">Edit</string>
+    <string name="menu_excluir">Delete</string>
+
+    <!-- Adapter Labels -->
+    <string name="label_quantidade_adapter">Qty: %1$.2f %2$s</string>
+    <string name="label_valor_adapter">$ %1$.2f</string>
+
+    <!-- Settings -->
+    <string name="label_modo_noturno">Night Mode</string>
+    <string name="label_ordenacao">Sort by</string>
+    <string name="ordem_descricao">Description</string>
+    <string name="ordem_preco">Price</string>
+    <string name="unidade_unidade">Unit</string>
+    <string name="unidade_kg">Kilogram (Kg)</string>
+    <string name="unidade_grama">Gram (g)</string>
+    <string name="unidade_litro">Liter (L)</string>
+    <string name="unidade_caixa">Box</string>
 </resources>

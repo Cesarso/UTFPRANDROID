@@ -48,6 +48,13 @@ public class Produto implements Serializable {
         }
     };
 
+    public static final Comparator<Produto> COMPARADOR_VALOR = new Comparator<Produto>() {
+        @Override
+        public int compare(Produto p1, Produto p2) {
+            return Double.compare(p1.getValor(), p2.getValor());
+        }
+    };
+
     @Override
     public String toString() {
         return descricao + " - " + unidade;

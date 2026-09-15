@@ -17,9 +17,7 @@ public class ProdutosActivity extends AppCompatActivity {
 
     private ActivityProdutosBinding binding;
     private int posicaoEdicao = -1;
-
-    //Ordem está pela unidade mais utilizada no cadastro.
-    private final String[] unidades = {"Unidade", "Kg", "Grama", "Litro", "Caixa"};
+    private String[] unidades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +25,8 @@ public class ProdutosActivity extends AppCompatActivity {
 
         binding = ActivityProdutosBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        unidades = getResources().getStringArray(R.array.unidades_array);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -37,14 +37,14 @@ public class ProdutosActivity extends AppCompatActivity {
         // Verificar se está em modo de edição
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("produto")) {
-            setTitle("Editar Produto");
+            setTitle(R.string.title_editar_produto);
             Produto produto = (Produto) intent.getSerializableExtra("produto");
             posicaoEdicao = intent.getIntExtra("posicao", -1);
             if (produto != null) {
                 preencherCampos(produto);
             }
         } else {
-            setTitle("Cadastro de Produto");
+            setTitle(R.string.title_cadastro_produto);
         }
     }
 
@@ -61,9 +61,11 @@ public class ProdutosActivity extends AppCompatActivity {
         binding.etValor.setText(String.valueOf(produto.getValor()));
         binding.cbDisponivel.setChecked(produto.isDisponivel());
 
-        if ("Ativo".equalsIgnoreCase(produto.getStatus())) {
+        // Para acessar os textos do arquivo string.xml usamos getString(R.string.ativo)
+        // Para o arquivo string.xml, comparamos com os valores
+        if (getString(R.string.ativo).equalsIgnoreCase(produto.getStatus())) {
             binding.rbAtivo.setChecked(true);
-        } else if ("Inativo".equalsIgnoreCase(produto.getStatus())) {
+        } else if (getString(R.string.inativo).equalsIgnoreCase(produto.getStatus())) {
             binding.rbInativo.setChecked(true);
         }
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Controle de Vendas</string>
+    <string name="hint_descricao">Descrição do Produto</string>
+    <string name="hint_quantidade">Quantidade</string>
+    <string name="hint_valor">Valor (R$)</string>
+    <string name="label_status">Status:</string>
+    <string name="ativo">Ativo</string>
+    <string name="inativo">Inativo</string>
+    <string name="disponivel">Disponível para pronta entrega</string>
+    <string name="unidade_medida">Unidade de Medida</string>
+
+    <!-- Titulos -->
+    <string name="title_sobre_autor">Sobre o Autor</string>
+    <string name="title_lista_produto">Lista de Produtos</string>
+    <string name="title_cadastro_produto">Adicionar Produto</string>
+    <string name="title_editar_produto">Editar Produto</string>
+    <string name="title_dados_produto">Dados do Produto</string>
+    <string name="title_produto">Produto</string>
+    <string name="title_pedido">Pedido</string>
+    <string name="title_configuracoes">Configurações</string>
+
+    <!-- Mensagens -->
+    <string name="erro_descricao">Informe a descrição</string>
+    <string name="erro_quantidade">Informe a quantidade</string>
+    <string name="erro_valor">Informe o valor</string>
+    <string name="erro_status">Selecione o status do produto</string>
+    <string name="dados_limpos">Os campos foram limpos com sucesso!</string>
+    <string name="produto_salvo">Produto salvo com sucesso!</string>
+    <string name="produto_excluido">Produto excluído com sucesso!</string>
+    <string name="mensagem_produto_clicado">Produto: %1$s\nValor: R$ %2$.2f</string>
+
+    <!-- Botões e Rótulos -->
+    <string name="btn_adicionar">Adicionar</string>
+    <string name="btn_salvar">Salvar</string>
+    <string name="btn_limpar">Limpar</string>
+    <string name="btn_sobre">Sobre</string>
+    <string name="menu_configuracoes">Configurações</string>
+    <string name="menu_editar">Editar</string>
+    <string name="menu_excluir">Excluir</string>
+
+    <!-- Rótulos do Adapter -->
+    <string name="label_quantidade_adapter">Qtd: %1$.2f %2$s</string>
+    <string name="label_valor_adapter">R$ %1$.2f</string>
+
+    <!-- Configurações -->
+    <string name="label_modo_noturno">Modo Noturno</string>
+    <string name="label_ordenacao">Ordenar por</string>
+    <string name="ordem_descricao">Descrição</string>
+    <string name="ordem_preco">Preço</string>
+
+    <string name="autor_curso">Pós Tecnologias Java</string>
+    <string name="app_descricao">Controle de vendas de um confeiteiro autônomo</string>
+    <string name="instituicao">UTFPR</string>
+    <string name="unidade_unidade">Unidade</string>
+    <string name="unidade_kg">Quilograma (Kg)</string>
+    <string name="unidade_grama">Grama (g)</string>
+    <string name="unidade_litro">Litro (L)</string>
+    <string name="unidade_caixa">Caixa</string>
+</resources>

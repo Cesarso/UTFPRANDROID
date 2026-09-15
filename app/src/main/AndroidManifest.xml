@@ -23,12 +23,17 @@
 
         <activity
             android:name=".ProdutosActivity"
-            android:label="Cadastro de Produto"
+            android:label="@string/title_cadastro_produto"
             android:exported="false" />
 
         <activity
             android:name=".SobreActivity"
-            android:label="Sobre o Autor"
+            android:label="@string/title_sobre_autor"
+            android:exported="false" />
+
+        <activity
+            android:name=".ConfiguracoesActivity"
+            android:label="@string/title_configuracoes"
             android:exported="false" />
 
     </application>

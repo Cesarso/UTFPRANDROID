@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Está sendo passado pelo ArrayAdapter.-->
     <string-array name="unidades_array">
-        <item>Unidade</item>
-        <item>Quilograma (Kg)</item>
-        <item>Grama (g)</item>
-        <item>Litro (L)</item>
-        <item>Caixa</item>
+        <item>@string/unidade_unidade</item>
+        <item>@string/unidade_kg</item>
+        <item>@string/unidade_grama</item>
+        <item>@string/unidade_litro</item>
+        <item>@string/unidade_caixa</item>
+    </string-array>
+
+    <string-array name="opcoes_ordenacao">
+        <item>@string/ordem_descricao</item>
+        <item>@string/ordem_preco</item>
     </string-array>
 </resources>

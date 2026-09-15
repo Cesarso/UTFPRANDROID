@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_configuracoes"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchModoNoturno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_modo_noturno"
+        android:textSize="18sp"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_ordenacao"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/rgOrdenacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbOrdemDescricao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ordem_descricao"/>
+
+        <RadioButton
+            android:id="@+id/rbOrdemPreco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ordem_preco"/>
+
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btnSalvarConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_salvar"/>
+
+</LinearLayout>

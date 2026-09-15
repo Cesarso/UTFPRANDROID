@@ -1,6 +1,8 @@
 package br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,11 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.ActionMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 
 public class ListagemProdutosActivity extends AppCompatActivity {
 
@@ -30,10 +32,12 @@ public class ListagemProdutosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        aplicarModoNoturno();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listagem_produtos);
 
-        setTitle("Lista de Produtos");
+        setTitle(R.string.title_lista_produto);
 
         listViewProdutos = findViewById(R.id.listViewProdutos);
 
@@ -45,8 +49,8 @@ public class ListagemProdutosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Produto produtoClicado = listaProdutos.get(position);
-                String mensagem = "Produto: " + produtoClicado.getDescricao() + 
-                                 "\nValor: R$ " + String.format(Locale.getDefault(), "%.2f", produtoClicado.getValor());
+                String mensagem = getString(R.string.mensagem_produto_clicado, 
+                        produtoClicado.getDescricao(), produtoClicado.getValor());
                 Toast.makeText(ListagemProdutosActivity.this, mensagem, Toast.LENGTH_SHORT).show();
             }
         });
@@ -85,7 +89,7 @@ public class ListagemProdutosActivity extends AppCompatActivity {
                         } else if (id == R.id.menu_excluir) {
                             listaProdutos.remove(posicaoSelecionada);
                             adapter.notifyDataSetChanged();
-                            Toast.makeText(ListagemProdutosActivity.this, "Produto excluído com sucesso", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListagemProdutosActivity.this, R.string.produto_excluido, Toast.LENGTH_SHORT).show();
                             mode.finish();
                             return true;
                         }
@@ -103,7 +107,36 @@ public class ListagemProdutosActivity extends AppCompatActivity {
         });
     }
 
-    // Criar o menu de opções na barra do app (Adicionar, Sobre)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ordenarLista();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void aplicarModoNoturno() {
+        SharedPreferences sharedPreferences = getSharedPreferences(ConfiguracoesActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        boolean nightMode = sharedPreferences.getBoolean(ConfiguracoesActivity.KEY_NIGHT_MODE, false);
+
+        if (nightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    private void ordenarLista() {
+        SharedPreferences sharedPreferences = getSharedPreferences(ConfiguracoesActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        int sortOrder = sharedPreferences.getInt(ConfiguracoesActivity.KEY_SORT_ORDER, ConfiguracoesActivity.SORT_DESCRIPTION);
+
+        if (sortOrder == ConfiguracoesActivity.SORT_PRICE) {
+            Collections.sort(listaProdutos, Produto.COMPARADOR_VALOR);
+        } else {
+            Collections.sort(listaProdutos, Produto.COMPARADOR_DESCRICAO);
+        }
+    }
+
+    // Criar o menu de opções na barra do app (Adicionar, Configurações, Sobre)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_listagem, menu);
@@ -117,6 +150,10 @@ public class ListagemProdutosActivity extends AppCompatActivity {
         if (id == R.id.menu_adicionar) {
             Intent intent = new Intent(ListagemProdutosActivity.this, ProdutosActivity.class);
             startActivityForResult(intent, REQUEST_CODE_PRODUTO);
+            return true;
+        } else if (id == R.id.menu_configuracoes) {
+            Intent intent = new Intent(ListagemProdutosActivity.this, ConfiguracoesActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.menu_sobre) {
             Intent intent = new Intent(ListagemProdutosActivity.this, SobreActivity.class);
@@ -145,7 +182,7 @@ public class ListagemProdutosActivity extends AppCompatActivity {
                         listaProdutos.set(posicao, produto);
                     }
                 }
-                Collections.sort(listaProdutos, Produto.COMPARADOR_DESCRICAO);
+                ordenarLista();
                 adapter.notifyDataSetChanged();
             }
         }

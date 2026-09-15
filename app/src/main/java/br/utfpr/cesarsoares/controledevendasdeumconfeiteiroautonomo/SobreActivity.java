@@ -14,7 +14,7 @@ public class SobreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sobre);
         
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Sobre o Autor");
+            getSupportActionBar().setTitle(R.string.title_sobre_autor);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
