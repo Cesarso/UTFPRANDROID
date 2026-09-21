@@ -1,6 +1,7 @@
 package br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
@@ -44,7 +47,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
         btnSalvar.setOnClickListener(v -> {
             salvarPreferencias();
-            finish();
+            //finish();
         });
     }
 
@@ -66,18 +69,29 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         boolean nightMode = switchModoNoturno.isChecked();
         int sortOrder = rgOrdenacao.getCheckedRadioButtonId() == R.id.rbOrdemPreco ? SORT_PRICE : SORT_DESCRIPTION;
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(KEY_NIGHT_MODE, nightMode);
-        editor.putInt(KEY_SORT_ORDER, sortOrder);
-        editor.apply();
+        String mensagem = getString(R.string.deseja_salvar);
 
-        // Aplicar modo noturno imediatamente
-        if (nightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        DialogInterface.OnClickListener listenerSim = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(KEY_NIGHT_MODE, nightMode);
+                editor.putInt(KEY_SORT_ORDER, sortOrder);
+                editor.apply();
+
+                // Aplicar modo noturno imediatamente
+                // Agora aplica modo noturno após salvar confirgurações
+                if (nightMode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                finish();
+            }
+
+        };
+        UtilsAlert.confirmarAcao(this,mensagem, listenerSim, null);
     }
 
     @Override

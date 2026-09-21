@@ -1,6 +1,7 @@
 package br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import androidx.appcompat.view.ActionMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
 
 public class ListagemProdutosActivity extends AppCompatActivity {
 
@@ -87,10 +90,27 @@ public class ListagemProdutosActivity extends AppCompatActivity {
                             mode.finish();
                             return true;
                         } else if (id == R.id.menu_excluir) {
-                            listaProdutos.remove(posicaoSelecionada);
-                            adapter.notifyDataSetChanged();
-                            Toast.makeText(ListagemProdutosActivity.this, R.string.produto_excluido, Toast.LENGTH_SHORT).show();
-                            mode.finish();
+
+                        //  Troca pelo alertDialog
+                        //    Toast.makeText(ListagemProdutosActivity.this, R.string.produto_excluido, Toast.LENGTH_SHORT).show();
+
+                            Produto produto = listaProdutos.get(posicaoSelecionada);
+                         //   String mensagem = getString(R.string.deseja_apagar) + " " + "\"" + produto.getDescricao() + "\"";
+                            // Com passagem de parâmetro ao message
+                            String mensagem = getString(R.string.deseja_apagar, produto.getDescricao());
+
+                            DialogInterface.OnClickListener listenerSim = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+                                    listaProdutos.remove(posicaoSelecionada);
+                                    adapter.notifyDataSetChanged(); //listView
+                                    mode.finish();
+                                }
+
+                            };
+
+                            UtilsAlert.confirmarAcao(ListagemProdutosActivity.this, mensagem, listenerSim, null);
+
                             return true;
                         }
                         return false;

@@ -6,12 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.databinding.ActivityProdutosBinding;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
 
 public class ProdutosActivity extends AppCompatActivity {
 
@@ -109,26 +109,26 @@ public class ProdutosActivity extends AppCompatActivity {
 
         // Validação dos EditTexts
         if (descricao.isEmpty()) {
-            mostrarErro(getString(R.string.erro_descricao));
+            UtilsAlert.mostrarAviso(this, R.string.erro_descricao);
             binding.etDescricao.requestFocus();
             return;
         }
 
         if (qtdStr.isEmpty()) {
-            mostrarErro(getString(R.string.erro_quantidade));
+            UtilsAlert.mostrarAviso(this, R.string.erro_quantidade);
             binding.etQuantidade.requestFocus();
             return;
         }
 
         if (valorStr.isEmpty()) {
-            mostrarErro(getString(R.string.erro_valor));
+            UtilsAlert.mostrarAviso(this, R.string.erro_valor);
             binding.etValor.requestFocus();
             return;
         }
 
         // Validação do RadioButton
         if (selectedRadioId == -1) {
-            mostrarErro(getString(R.string.erro_status));
+            UtilsAlert.mostrarAviso(this, R.string.erro_status);
             return;
         }
 
@@ -167,10 +167,14 @@ public class ProdutosActivity extends AppCompatActivity {
         // Foco inicial
         binding.etDescricao.requestFocus();
 
-        Toast.makeText(this, R.string.dados_limpos, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, R.string.dados_limpos, Toast.LENGTH_SHORT).show();
+        UtilsAlert.mostrarAviso(this, R.string.dados_limpos);
     }
 
+    /* Trocado pelo AlertDialog
     private void mostrarErro(String mensagem) {
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
+
+     */
 }

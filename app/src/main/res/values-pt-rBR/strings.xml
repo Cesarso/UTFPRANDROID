@@ -57,4 +57,11 @@
     <string name="unidade_grama">Grama (g)</string>
     <string name="unidade_litro">Litro (L)</string>
     <string name="unidade_caixa">Caixa</string>
+    <string name="aviso">aviso</string>
+    <string name="ok">OK</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="deseja_apagar">Deseja Excluir?\n\"%1$s\"</string>
+    <string name="deseja_salvar">Deseja salvar Configurações</string>
 </resources>

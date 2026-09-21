@@ -14,13 +14,14 @@
         android:src="@drawable/ic_bakery"
         android:contentDescription="@string/app_name" />
 
+    <!-- Para o modo dark faz assim: ?android:attr/textColorPrimary -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/autor_nome"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:layout_width="wrap_content"
