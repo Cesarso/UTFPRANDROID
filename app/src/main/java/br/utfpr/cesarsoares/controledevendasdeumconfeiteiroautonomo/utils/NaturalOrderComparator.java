@@ -2,6 +2,18 @@ package br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils;
 
 import java.util.Comparator;
 
+/**
+ * Esta classe foi implementada para a seguinte
+ * Solução: Ordenação Natural (NaturalOrderComparator)
+ * A ordenação "natural" simula como se lê os números dentro de um texto.
+ * Em vez de olhar para os dígitos '3' e '4' como letras isoladas, a classe NaturalOrderComparator identifica blocos numéricos sequenciais dentro da string,
+ * extrai o número completo e o compara de forma matemática (32 contra 4).
+ * Com essa lógica implementada e aplicada no COMPARADOR_DESCRICAO da classe Produto, os itens agora seguem a ordem lógica esperada por qualquer usuário:
+ * •Item 1
+ * •Item 4
+ * •Item 5
+ * •Item 32
+ */
 public class NaturalOrderComparator implements Comparator<String> {
 
     @Override
