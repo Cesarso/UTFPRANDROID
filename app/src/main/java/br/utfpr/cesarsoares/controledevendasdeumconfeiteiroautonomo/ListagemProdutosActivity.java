@@ -20,7 +20,10 @@ import androidx.appcompat.view.ActionMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Produto;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.persistencia.ProdutoDataBase;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
 
 public class ListagemProdutosActivity extends AppCompatActivity {
@@ -102,15 +105,14 @@ public class ListagemProdutosActivity extends AppCompatActivity {
                             DialogInterface.OnClickListener listenerSim = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int which) {
-                                    listaProdutos.remove(posicaoSelecionada);
-                                    adapter.notifyDataSetChanged(); //listView
+                                    ProdutoDataBase.getInstance(ListagemProdutosActivity.this).getProdutoDao().delete(produto);
+                                    carregarLista();
                                     mode.finish();
+                                    Toast.makeText(ListagemProdutosActivity.this, R.string.produto_excluido, Toast.LENGTH_SHORT).show();
                                 }
-
                             };
 
                             UtilsAlert.confirmarAcao(ListagemProdutosActivity.this, mensagem, listenerSim, null);
-
                             return true;
                         }
                         return false;
@@ -130,6 +132,16 @@ public class ListagemProdutosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        carregarLista();
+    }
+
+    // Pega lista de produtos do banco
+    private void carregarLista() {
+        List<Produto> produtos = ProdutoDataBase.getInstance(this).getProdutoDao().queryAllAscending();
+        listaProdutos.clear();
+        if (produtos != null) {
+            listaProdutos.addAll(produtos);
+        }
         ordenarLista();
         adapter.notifyDataSetChanged();
     }
@@ -187,24 +199,8 @@ public class ListagemProdutosActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE_PRODUTO && resultCode == RESULT_OK && data != null) {
-            Produto produto = (Produto) data.getSerializableExtra("produto");
-            int posicao = data.getIntExtra("posicao", -1);
-
-            if (produto != null) {
-                if (posicao == -1) {
-                    // Novo produto
-                    listaProdutos.add(produto);
-                } else {
-                    // Produto editado
-                    if (posicao >= 0 && posicao < listaProdutos.size()) {
-                        listaProdutos.set(posicao, produto);
-                    }
-                }
-                ordenarLista();
-                adapter.notifyDataSetChanged();
-            }
+        if (requestCode == REQUEST_CODE_PRODUTO && resultCode == RESULT_OK) {
+            carregarLista();
         }
     }
 }

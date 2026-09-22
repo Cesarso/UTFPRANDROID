@@ -33,6 +33,10 @@ android {
 }
 
 dependencies {
+    // Room
+    implementation libs.androidx.room.runtime
+    annotationProcessor libs.androidx.room.compiler
+    annotationProcessor libs.kotlinx.metadata.jvm
 
     implementation libs.appcompat
     implementation libs.material

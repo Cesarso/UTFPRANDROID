@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Produto;
+
 public class ProdutoAdapter extends BaseAdapter {
 
     private final Context context;

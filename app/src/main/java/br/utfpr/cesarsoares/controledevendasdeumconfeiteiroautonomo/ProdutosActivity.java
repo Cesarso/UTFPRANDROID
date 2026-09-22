@@ -11,12 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.databinding.ActivityProdutosBinding;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Produto;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.persistencia.ProdutoDataBase;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
 
 public class ProdutosActivity extends AppCompatActivity {
 
     private ActivityProdutosBinding binding;
-    private int posicaoEdicao = -1;
+
+    public static final String KEY_ID = "IDPRODUTO";
+    private Produto produtoOriginal = null;
     private String[] unidades;
 
     @Override
@@ -38,10 +42,9 @@ public class ProdutosActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("produto")) {
             setTitle(R.string.title_editar_produto);
-            Produto produto = (Produto) intent.getSerializableExtra("produto");
-            posicaoEdicao = intent.getIntExtra("posicao", -1);
-            if (produto != null) {
-                preencherCampos(produto);
+            produtoOriginal = (Produto) intent.getSerializableExtra("produto");
+            if (produtoOriginal != null) {
+                preencherCampos(produtoOriginal);
             }
         } else {
             setTitle(R.string.title_cadastro_produto);
@@ -143,11 +146,14 @@ public class ProdutosActivity extends AppCompatActivity {
         // Cria/Atualiza o objeto Produto
         Produto produto = new Produto(descricao, quantidade, valor, unidade, status, isDisponivel);
 
-        // Devolve o resultado para a Activity de Listagem
-        Intent intentResposta = new Intent();
-        intentResposta.putExtra("produto", produto);
-        intentResposta.putExtra("posicao", posicaoEdicao);
-        setResult(RESULT_OK, intentResposta);
+        if (produtoOriginal != null) {
+            produto.setIdProduto(produtoOriginal.getIdProduto());
+            ProdutoDataBase.getInstance(this).getProdutoDao().update(produto);
+        } else {
+            ProdutoDataBase.getInstance(this).getProdutoDao().insert(produto);
+        }
+
+        setResult(RESULT_OK);
         finish();
     }
 
