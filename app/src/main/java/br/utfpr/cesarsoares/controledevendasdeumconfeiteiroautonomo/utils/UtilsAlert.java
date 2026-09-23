@@ -37,6 +37,19 @@ public final class UtilsAlert {
 
     }
 
+    public static void mostrarAviso(Context context,
+                                     String mensagem){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle(R.string.title_pedido);
+        builder.setMessage(mensagem);
+        builder.setNeutralButton(R.string.ok, null);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
     public static void confirmarAcao(Context context,
                                      int idMensagem,
                                      DialogInterface.OnClickListener listenerSim,

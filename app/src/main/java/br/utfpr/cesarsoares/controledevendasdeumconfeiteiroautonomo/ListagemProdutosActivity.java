@@ -18,10 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.ActionMode;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.ItemPedido;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Produto;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.persistencia.ProdutoDataBase;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
@@ -35,6 +38,9 @@ public class ListagemProdutosActivity extends AppCompatActivity {
     private ProdutoAdapter adapter;
     private ActionMode actionMode;
     private int posicaoSelecionada = -1;
+
+    private ArrayList<ItemPedido> itensPedido;
+    private MaterialButton buttonTotalPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +57,26 @@ public class ListagemProdutosActivity extends AppCompatActivity {
         adapter = new ProdutoAdapter(this, listaProdutos);
         listViewProdutos.setAdapter(adapter);
 
+        itensPedido = new ArrayList<>();
+        buttonTotalPedido = findViewById(R.id.buttonTotalPedido);
+
+        buttonTotalPedido.setOnClickListener(v -> mostrarPedido());
+
         listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Produto produtoClicado = listaProdutos.get(position);
-                String mensagem = getString(R.string.mensagem_produto_clicado, 
-                        produtoClicado.getDescricao(), produtoClicado.getValor());
-                Toast.makeText(ListagemProdutosActivity.this, mensagem, Toast.LENGTH_SHORT).show();
+             //   String mensagem = getString(R.string.mensagem_produto_clicado, produtoClicado.getDescricao(), produtoClicado.getValor());
+             //   Toast.makeText(ListagemProdutosActivity.this, mensagem, Toast.LENGTH_SHORT).show();
+                listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Produto produtoClicado = listaProdutos.get(position);
+
+                        adicionarProdutoAoPedido(produtoClicado);
+                    }
+                });
             }
         });
 
@@ -127,6 +146,70 @@ public class ListagemProdutosActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void adicionarProdutoAoPedido(Produto produto) {
+
+        for (ItemPedido item : itensPedido) {
+
+            if (item.getProduto().getIdProduto() == produto.getIdProduto()) {
+                item.incrementar();
+                atualizarTotalPedido();
+                return;
+            }
+        }
+
+        itensPedido.add(new ItemPedido(produto));
+
+        atualizarTotalPedido();
+    }
+
+    private void atualizarTotalPedido() {
+
+        double total = 0.0;
+
+        for (ItemPedido item : itensPedido) {
+            total += item.getSubtotal();
+        }
+
+        buttonTotalPedido.setText(
+                getString(R.string.total_pedido, total)
+        );
+    }
+
+    private void mostrarPedido() {
+
+        if (itensPedido.isEmpty()) {
+            UtilsAlert.mostrarAviso(this, R.string.pedido_vazio);
+            return;
+        }
+
+        StringBuilder mensagem = new StringBuilder();
+
+        double total = 0.0;
+
+        for (ItemPedido item : itensPedido) {
+
+            Produto produto = item.getProduto();
+
+            mensagem.append(produto.getDescricao())
+                    .append("\n");
+
+            mensagem.append(item.getQuantidade())
+                    .append(" x R$ ")
+                    .append(String.format("%.2f", produto.getValor()))
+                    .append(" = R$ ")
+                    .append(String.format("%.2f", item.getSubtotal()))
+                    .append("\n\n");
+
+            total += item.getSubtotal();
+        }
+
+        mensagem.append("-------------------------\n");
+        mensagem.append("TOTAL: R$ ")
+                .append(String.format("%.2f", total));
+
+        UtilsAlert.mostrarAviso(this, mensagem.toString());
     }
 
     @Override

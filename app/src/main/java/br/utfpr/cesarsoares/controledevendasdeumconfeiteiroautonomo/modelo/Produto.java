@@ -21,8 +21,6 @@ public class Produto implements Serializable {
     private boolean disponivel;
 
     // Constructor
-    public Produto(){}
-
     public Produto(String descricao, double quantidade, double valor, String unidade, String status, boolean disponivel) {
         this.descricao = descricao;
         this.quantidade = quantidade;

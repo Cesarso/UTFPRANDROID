@@ -17,7 +17,7 @@
     <string name="title_editar_produto">Editar Produto</string>
     <string name="title_dados_produto">Dados do Produto</string>
     <string name="title_produto">Produto</string>
-    <string name="title_pedido">Pedido</string>
+    <string name="title_pedido">Vendas</string>
     <string name="title_configuracoes">Configurações</string>
 
     <!-- Mensagens -->
@@ -64,4 +64,7 @@
     <string name="nao">Não</string>
     <string name="deseja_apagar">Deseja Excluir?\n\"%1$s\"</string>
     <string name="deseja_salvar">Deseja salvar Configurações</string>
+    <string name="total_pedido">Total de Vendas: R$ %.2f</string>
+    <string name="pedido_vazio">Nenhum item foi adicionado ao pedido.</string>
+    <string name="total_pedido_inicial">Total de Vendas: R$ 0,00</string>
 </resources>

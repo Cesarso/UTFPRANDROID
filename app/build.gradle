@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo'
+    namespace = 'br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo'
     compileSdk 36
 
     defaultConfig {
@@ -14,6 +14,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions{
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation":"$projectDir/schemas".toString()]
+            }
+        }
     }
 
     viewBinding {

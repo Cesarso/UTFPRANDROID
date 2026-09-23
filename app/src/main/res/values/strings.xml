@@ -21,7 +21,7 @@
     <string name="title_editar_produto">Edit Product</string>
     <string name="title_dados_produto">Product Details</string>
     <string name="title_produto">Product</string>
-    <string name="title_pedido">Order</string>
+    <string name="title_pedido">Sales</string>
     <string name="title_configuracoes">Settings</string>
 
     <!-- Messages -->
@@ -64,6 +64,9 @@
     <string name="nao">No</string>
     <string name="deseja_apagar">Do you want do delete?\n\"%1$s\"</string>
     <string name="deseja_salvar">Do you want do save Configurations?</string>
+    <string name="total_pedido">Sales Total: $ %.2f</string>
+    <string name="pedido_vazio">No items have been added to the order.</string>
+    <string name="total_pedido_inicial">Sales Total: $ 0,00</string>
 
 
 </resources>
