@@ -27,6 +27,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".PedidoActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".SobreActivity"
             android:label="@string/title_sobre_autor"
             android:exported="false" />

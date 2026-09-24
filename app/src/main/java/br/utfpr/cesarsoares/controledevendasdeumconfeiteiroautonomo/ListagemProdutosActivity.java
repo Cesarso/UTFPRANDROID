@@ -32,6 +32,9 @@ import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsA
 public class ListagemProdutosActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_PRODUTO = 1;
+    public static final int REQUEST_CODE_PEDIDO = 2;
+    public static final int RESULT_PEDIDO_LIMPO = 10;
+    public static final int RESULT_PEDIDO_SALVO = 11;
 
     private ListView listViewProdutos;
     private ArrayList<Produto> listaProdutos;
@@ -64,19 +67,15 @@ public class ListagemProdutosActivity extends AppCompatActivity {
 
         listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(
+                    AdapterView<?> parent,
+                    View view,
+                    int position,
+                    long id) {
+
                 Produto produtoClicado = listaProdutos.get(position);
-             //   String mensagem = getString(R.string.mensagem_produto_clicado, produtoClicado.getDescricao(), produtoClicado.getValor());
-             //   Toast.makeText(ListagemProdutosActivity.this, mensagem, Toast.LENGTH_SHORT).show();
-                listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        Produto produtoClicado = listaProdutos.get(position);
-
-                        adicionarProdutoAoPedido(produtoClicado);
-                    }
-                });
+                adicionarProdutoAoPedido(produtoClicado);
             }
         });
 
@@ -184,32 +183,17 @@ public class ListagemProdutosActivity extends AppCompatActivity {
             return;
         }
 
-        StringBuilder mensagem = new StringBuilder();
+        Intent intent = new Intent(
+                ListagemProdutosActivity.this,
+                PedidoActivity.class
+        );
 
-        double total = 0.0;
+        intent.putExtra(
+                PedidoActivity.EXTRA_ITENS_PEDIDO,
+                itensPedido
+        );
 
-        for (ItemPedido item : itensPedido) {
-
-            Produto produto = item.getProduto();
-
-            mensagem.append(produto.getDescricao())
-                    .append("\n");
-
-            mensagem.append(item.getQuantidade())
-                    .append(" x R$ ")
-                    .append(String.format("%.2f", produto.getValor()))
-                    .append(" = R$ ")
-                    .append(String.format("%.2f", item.getSubtotal()))
-                    .append("\n\n");
-
-            total += item.getSubtotal();
-        }
-
-        mensagem.append("-------------------------\n");
-        mensagem.append("TOTAL: R$ ")
-                .append(String.format("%.2f", total));
-
-        UtilsAlert.mostrarAviso(this, mensagem.toString());
+        startActivityForResult(intent, REQUEST_CODE_PEDIDO);
     }
 
     @Override
@@ -280,10 +264,36 @@ public class ListagemProdutosActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_PRODUTO && resultCode == RESULT_OK) {
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            @Nullable Intent intent) {
+
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == REQUEST_CODE_PRODUTO
+                && resultCode == RESULT_OK) {
+
             carregarLista();
+            return;
+        }
+
+        if (requestCode == REQUEST_CODE_PEDIDO
+                && resultCode == RESULT_OK
+                && intent != null) {
+
+            ArrayList<ItemPedido> itensAtualizados = (ArrayList<ItemPedido>)
+                    intent.getSerializableExtra(
+                            PedidoActivity.EXTRA_ITENS_PEDIDO
+                    );
+
+            if (itensAtualizados != null) {
+
+                itensPedido.clear();
+                itensPedido.addAll(itensAtualizados);
+
+                atualizarTotalPedido();
+            }
         }
     }
 }

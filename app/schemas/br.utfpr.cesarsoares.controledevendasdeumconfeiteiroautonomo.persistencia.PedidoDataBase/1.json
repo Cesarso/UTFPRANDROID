@@ -1,0 +1,127 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8962c58b279c897c98c5d746b191c8af",
+    "entities": [
+      {
+        "tableName": "Pedido",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPedido` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `data` INTEGER, `total` REAL)",
+        "fields": [
+          {
+            "fieldPath": "idPedido",
+            "columnName": "idPedido",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "total",
+            "columnName": "total",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "idPedido"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ITEM_PEDIDO",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idItemPedido` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `idPedido` INTEGER NOT NULL, `idProduto` INTEGER NOT NULL, `descricao` TEXT, `valorUnitario` REAL NOT NULL, `quantidade` INTEGER NOT NULL, FOREIGN KEY(`idPedido`) REFERENCES `Pedido`(`idPedido`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "idItemPedido",
+            "columnName": "idItemPedido",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idPedido",
+            "columnName": "idPedido",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idProduto",
+            "columnName": "idProduto",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "descricao",
+            "columnName": "descricao",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "valorUnitario",
+            "columnName": "valorUnitario",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantidade",
+            "columnName": "quantidade",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "idItemPedido"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_ITEM_PEDIDO_idPedido",
+            "unique": false,
+            "columnNames": [
+              "idPedido"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ITEM_PEDIDO_idPedido` ON `${TABLE_NAME}` (`idPedido`)"
+          },
+          {
+            "name": "index_ITEM_PEDIDO_idProduto",
+            "unique": false,
+            "columnNames": [
+              "idProduto"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ITEM_PEDIDO_idProduto` ON `${TABLE_NAME}` (`idProduto`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Pedido",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idPedido"
+            ],
+            "referencedColumns": [
+              "idPedido"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8962c58b279c897c98c5d746b191c8af')"
+    ]
+  }
+}

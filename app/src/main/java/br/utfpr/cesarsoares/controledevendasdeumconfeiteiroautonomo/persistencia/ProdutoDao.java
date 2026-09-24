@@ -26,6 +26,6 @@ public interface ProdutoDao {
 
     @Query("SELECT * FROM PRODUTO ORDER BY DESCRICAO ASC")
     List<Produto> queryAllAscending();
-    @Query("SELECT * FROM PRODUTO ORDER BY DESCRICAO ASC")
+    @Query("SELECT * FROM PRODUTO ORDER BY DESCRICAO DESC")
     List<Produto> queryAllDownward();
 }

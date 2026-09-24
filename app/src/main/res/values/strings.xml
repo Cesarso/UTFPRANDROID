@@ -21,7 +21,6 @@
     <string name="title_editar_produto">Edit Product</string>
     <string name="title_dados_produto">Product Details</string>
     <string name="title_produto">Product</string>
-    <string name="title_pedido">Sales</string>
     <string name="title_configuracoes">Settings</string>
 
     <!-- Messages -->
@@ -65,8 +64,27 @@
     <string name="deseja_apagar">Do you want do delete?\n\"%1$s\"</string>
     <string name="deseja_salvar">Do you want do save Configurations?</string>
     <string name="total_pedido">Sales Total: $ %.2f</string>
-    <string name="pedido_vazio">No items have been added to the order.</string>
+
     <string name="total_pedido_inicial">Sales Total: $ 0,00</string>
+
+    <!-- Pedido e ItensPedido -->
+    <string name="title_pedido">Pedido</string>
+
+    <string name="salvar_pedido">Save pedido</string>
+
+    <string name="limpar_pedido">Clear pedido</string>
+
+    <string name="deseja_limpar_pedido">Do you really want to clear all items from the order?</string>
+
+    <string name="deseja_excluir_item_pedido">" Do you want to remove the item  &quot;%1$s&quot; from the order?"</string>
+    <string name="item_pedido_excluido">" Item removed from the order."</string>
+
+    <string name="quantidade_item_pedido">Quantity: %1$d</string>
+    <string name="valor_unitario_item_pedido">Unitário: R$ %.2f</string>
+    <string name="subtotal_item_pedido">Subtotal: R$ %.2f</string>
+
+    <string name="pedido_vazio">No items have been added to the order.</string>
+    <string name="pedido_salvo">Order save with success.</string>
 
 
 </resources>

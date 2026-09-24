@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Produto;
 
-@Database(entities = Produto.class, version = 1, exportSchema = false)
+@Database(entities = Produto.class, version = 1, exportSchema = true)
 public abstract class ProdutoDataBase extends RoomDatabase  {
     public abstract ProdutoDao getProdutoDao();
     private static ProdutoDataBase INSTANCE;

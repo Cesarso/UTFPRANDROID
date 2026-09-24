@@ -1,6 +1,11 @@
 package br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo;
 
-public class ItemPedido {
+import java.io.Serializable;
+
+
+public class ItemPedido implements Serializable {
+
+    private long idPedido;
     private final Produto produto;
     private int quantidade;
 
@@ -23,5 +28,13 @@ public class ItemPedido {
 
     public double getSubtotal() {
         return quantidade * produto.getValor();
+    }
+
+    public long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(long idPedido) {
+        this.idPedido = idPedido;
     }
 }
