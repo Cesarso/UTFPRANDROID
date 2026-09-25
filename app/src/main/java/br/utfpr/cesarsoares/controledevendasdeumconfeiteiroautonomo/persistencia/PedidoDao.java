@@ -25,7 +25,7 @@ public interface PedidoDao {
     @Query("SELECT * FROM PEDIDO WHERE idPedido = :idPedido")
     List<Pedido> queryForId(long idPedido);
 
-    @Query("SELECT * FROM PEDIDO WHERE finalizado = 0 ORDER BY idPedido DESC LIMIT 1")
+    @Query("SELECT * FROM PEDIDO WHERE finalizado = 0 LIMIT 1")
     Pedido queryPedidoEmAndamento();
 
     @Query("UPDATE PEDIDO SET finalizado = 1 WHERE idPedido = :idPedido")

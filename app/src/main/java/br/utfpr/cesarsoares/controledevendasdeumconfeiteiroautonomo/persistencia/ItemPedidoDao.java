@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ public interface ItemPedidoDao {
 
     @Insert
     long insert(ItemPedidoEntity item);
+
+    @Update
+    int update(ItemPedidoEntity item);
 
     @Insert
     void insertAll(List<ItemPedidoEntity> itens);

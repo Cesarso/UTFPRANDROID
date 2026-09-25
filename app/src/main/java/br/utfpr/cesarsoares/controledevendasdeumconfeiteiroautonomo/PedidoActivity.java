@@ -185,7 +185,7 @@ public class PedidoActivity extends AppCompatActivity {
                     atualizarTotalPedido();
 
                     // Informa à tela principal que a lista mudou.
-                    devolverPedidoAtualizado();
+                    // devolverPedidoAtualizado();
 
                     mode.finish();
 
@@ -209,6 +209,9 @@ public class PedidoActivity extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Exclui o Pedido do banco de dados
+     */
     private void limparPedido() {
 
         if (itensPedido.isEmpty()) {
@@ -226,17 +229,42 @@ public class PedidoActivity extends AppCompatActivity {
                         R.string.limpar_pedido,
                         (dialog, which) -> {
 
+                            PedidoDataBase database =
+                                    PedidoDataBase.getInstance(this);
+
+                            database.runInTransaction(() -> {
+
+                                Pedido pedido =
+                                        database.getPedidoDao()
+                                                .queryPedidoEmAndamento();
+
+                                if (pedido != null) {
+
+                                    database.getItemPedidoDao()
+                                            .deleteByPedido(
+                                                    pedido.getIdPedido()
+                                            );
+
+                                    database.getPedidoDao()
+                                            .delete(pedido);
+                                }
+                            });
+
                             itensPedido.clear();
 
                             adapter.notifyDataSetChanged();
 
                             atualizarTotalPedido();
 
-                            // Devolve a lista vazia para a tela principal.
-                            devolverPedidoAtualizado();
+                            Toast.makeText(
+                                    PedidoActivity.this,
+                                    R.string.pedido_vazio,
+                                    Toast.LENGTH_SHORT
+                            ).show();
                         }
                 )
                 .show();
+        devolverPedidoAtualizado();
     }
 
     private void atualizarTotalPedido() {
@@ -255,6 +283,7 @@ public class PedidoActivity extends AppCompatActivity {
         );
 
         buttonSalvarPedido.setEnabled(!itensPedido.isEmpty());
+
     }
 
 
@@ -276,23 +305,42 @@ public class PedidoActivity extends AppCompatActivity {
                 PedidoDataBase.getInstance(this);
 
         database.runInTransaction(() -> {
+
+            Pedido pedido =
+                    database.getPedidoDao()
+                            .queryPedidoEmAndamento();
+
+            if (pedido == null) {
+
+                pedido = new Pedido();
+
+                pedido.setData(new Date());
+                pedido.setFinalizado(false);
+
+                long idPedido =
+                        database.getPedidoDao().insert(pedido);
+
+                pedido.setIdPedido(idPedido);
+            }
+
+            // Calcula o total da lista ATUALIZADA.
             double total = 0.0;
 
             for (ItemPedido item : itensPedido) {
                 total += item.getSubtotal();
             }
 
-            // Cria o pedido que será finalizado.
-            Pedido pedido = new Pedido();
-
             pedido.setData(new Date());
             pedido.setTotal(total);
-            pedido.setFinalizado(false);
 
-            // Salva o pedido e obtém o ID gerado.
-            long idPedido =
-                    database.getPedidoDao().insert(pedido);
+            // Atualiza o mesmo Pedido.
+            database.getPedidoDao().update(pedido);
 
+            // Remove os itens antigos do banco.
+            database.getItemPedidoDao()
+                    .deleteByPedido(pedido.getIdPedido());
+
+            // Monta a lista atualizada para o banco.
             ArrayList<ItemPedidoEntity> itensEntity =
                     new ArrayList<>();
 
@@ -301,7 +349,9 @@ public class PedidoActivity extends AppCompatActivity {
                 ItemPedidoEntity itemEntity =
                         new ItemPedidoEntity();
 
-                itemEntity.setIdPedido(idPedido);
+                itemEntity.setIdPedido(
+                        pedido.getIdPedido()
+                );
 
                 itemEntity.setIdProduto(
                         item.getProduto().getIdProduto()
@@ -322,11 +372,9 @@ public class PedidoActivity extends AppCompatActivity {
                 itensEntity.add(itemEntity);
             }
 
-            // Salva os itens do pedido.
-            database.getItemPedidoDao().insertAll(itensEntity);
-
-            // Agora este pedido deixa de ser o pedido em andamento.
-            database.getPedidoDao().finalizarPedido(idPedido);
+            // Grava no banco exatamente a lista atual.
+            database.getItemPedidoDao()
+                    .insertAll(itensEntity);
         });
 
         Toast.makeText(
@@ -335,14 +383,9 @@ public class PedidoActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT
         ).show();
 
-        // Limpa o pedido atual da tela.
-        //itensPedido.clear();
-        //adapter.notifyDataSetChanged();
-        atualizarTotalPedido();
-
         devolverPedidoAtualizado();
-       // Volta para a home
-       // finish();
+
+        finish();
     }
 
     private void devolverPedidoAtualizado() {
