@@ -13,6 +13,8 @@ public class Pedido implements Serializable {
     private Date data;
     private Double total;
 
+    private boolean finalizado;
+
     public Pedido() {
     }
 
@@ -38,5 +40,13 @@ public class Pedido implements Serializable {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public boolean isFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 }

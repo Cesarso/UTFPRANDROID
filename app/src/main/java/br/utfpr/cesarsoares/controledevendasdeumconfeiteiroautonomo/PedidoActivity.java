@@ -257,6 +257,8 @@ public class PedidoActivity extends AppCompatActivity {
         buttonSalvarPedido.setEnabled(!itensPedido.isEmpty());
     }
 
+
+
     private void salvarPedido() {
 
         if (itensPedido.isEmpty()) {
@@ -270,22 +272,24 @@ public class PedidoActivity extends AppCompatActivity {
             return;
         }
 
-        double total = 0.0;
-
-        for (ItemPedido item : itensPedido) {
-            total += item.getSubtotal();
-        }
-
-        Pedido pedido = new Pedido();
-        pedido.setData(new Date());
-        pedido.setTotal(total);
-
         PedidoDataBase database =
                 PedidoDataBase.getInstance(this);
 
         database.runInTransaction(() -> {
+            double total = 0.0;
 
-            // Salva o pedido e obtém o ID gerado pelo Room.
+            for (ItemPedido item : itensPedido) {
+                total += item.getSubtotal();
+            }
+
+            // Cria o pedido que será finalizado.
+            Pedido pedido = new Pedido();
+
+            pedido.setData(new Date());
+            pedido.setTotal(total);
+            pedido.setFinalizado(false);
+
+            // Salva o pedido e obtém o ID gerado.
             long idPedido =
                     database.getPedidoDao().insert(pedido);
 
@@ -318,7 +322,11 @@ public class PedidoActivity extends AppCompatActivity {
                 itensEntity.add(itemEntity);
             }
 
+            // Salva os itens do pedido.
             database.getItemPedidoDao().insertAll(itensEntity);
+
+            // Agora este pedido deixa de ser o pedido em andamento.
+            database.getPedidoDao().finalizarPedido(idPedido);
         });
 
         Toast.makeText(
@@ -327,18 +335,14 @@ public class PedidoActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT
         ).show();
 
-        Toast.makeText(
-                this,
-                R.string.pedido_salvo,
-                Toast.LENGTH_SHORT
-        ).show();
-
-        // Pedido salvo: devolve uma lista vazia.
+        // Limpa o pedido atual da tela.
         //itensPedido.clear();
+        //adapter.notifyDataSetChanged();
+        atualizarTotalPedido();
 
         devolverPedidoAtualizado();
-
-        //finish();
+       // Volta para a home
+       // finish();
     }
 
     private void devolverPedidoAtualizado() {

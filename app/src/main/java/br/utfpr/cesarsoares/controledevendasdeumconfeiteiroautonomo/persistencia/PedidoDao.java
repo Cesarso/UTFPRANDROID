@@ -22,11 +22,18 @@ public interface PedidoDao {
     @Update
     int update(Pedido pedido);
 
-    @Query("SELECT * FROM PEDIDO WHERE idPedido=:idPedido")
+    @Query("SELECT * FROM PEDIDO WHERE idPedido = :idPedido")
     List<Pedido> queryForId(long idPedido);
+
+    @Query("SELECT * FROM PEDIDO WHERE finalizado = 0 ORDER BY idPedido DESC LIMIT 1")
+    Pedido queryPedidoEmAndamento();
+
+    @Query("UPDATE PEDIDO SET finalizado = 1 WHERE idPedido = :idPedido")
+    int finalizarPedido(long idPedido);
 
     @Query("SELECT * FROM PEDIDO ORDER BY TOTAL ASC")
     List<Pedido> queryAllAscending();
+
     @Query("SELECT * FROM PEDIDO ORDER BY TOTAL DESC")
     List<Pedido> queryAllDownward();
 }

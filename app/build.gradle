@@ -33,6 +33,9 @@ android {
         }
     }
     compileOptions {
+
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
@@ -43,6 +46,8 @@ dependencies {
     implementation libs.androidx.room.runtime
     annotationProcessor libs.androidx.room.compiler
     annotationProcessor libs.kotlinx.metadata.jvm
+
+    coreLibraryDesugaring libs.desugar.jdk.libs
 
     implementation libs.appcompat
     implementation libs.material

@@ -22,6 +22,10 @@ public class ItemPedido implements Serializable {
         return quantidade;
     }
 
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
     public void incrementar() {
         quantidade++;
     }

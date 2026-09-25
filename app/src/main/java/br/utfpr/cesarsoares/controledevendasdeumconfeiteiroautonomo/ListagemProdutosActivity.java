@@ -25,7 +25,10 @@ import java.util.Collections;
 import java.util.List;
 
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.ItemPedido;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.ItemPedidoEntity;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Pedido;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.modelo.Produto;
+import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.persistencia.PedidoDataBase;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.persistencia.ProdutoDataBase;
 import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.UtilsAlert;
 
@@ -33,9 +36,6 @@ public class ListagemProdutosActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_PRODUTO = 1;
     public static final int REQUEST_CODE_PEDIDO = 2;
-    public static final int RESULT_PEDIDO_LIMPO = 10;
-    public static final int RESULT_PEDIDO_SALVO = 11;
-
     private ListView listViewProdutos;
     private ArrayList<Produto> listaProdutos;
     private ProdutoAdapter adapter;
@@ -61,7 +61,11 @@ public class ListagemProdutosActivity extends AppCompatActivity {
         listViewProdutos.setAdapter(adapter);
 
         itensPedido = new ArrayList<>();
+
         buttonTotalPedido = findViewById(R.id.buttonTotalPedido);
+
+        carregarLista();
+        carregarPedidoEmAndamento();
 
         buttonTotalPedido.setOnClickListener(v -> mostrarPedido());
 
@@ -145,6 +149,58 @@ public class ListagemProdutosActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void carregarPedidoEmAndamento() {
+
+        PedidoDataBase database =
+                PedidoDataBase.getInstance(this);
+
+        Pedido pedido =
+                database.getPedidoDao().queryPedidoEmAndamento();
+
+        if (pedido == null) {
+            atualizarTotalPedido();
+            return;
+        }
+
+        List<ItemPedidoEntity> itensSalvos =
+                database.getItemPedidoDao()
+                        .queryByPedido(pedido.getIdPedido());
+
+        itensPedido.clear();
+
+        for (ItemPedidoEntity itemSalvo : itensSalvos) {
+
+            Produto produto =
+                    encontrarProdutoPorId(itemSalvo.getIdProduto());
+
+            if (produto != null) {
+
+                ItemPedido itemPedido =
+                        new ItemPedido(produto);
+
+                itemPedido.setQuantidade(
+                        itemSalvo.getQuantidade()
+                );
+
+                itensPedido.add(itemPedido);
+            }
+        }
+
+        atualizarTotalPedido();
+    }
+
+    private Produto encontrarProdutoPorId(long idProduto) {
+
+        for (Produto produto : listaProdutos) {
+
+            if (produto.getIdProduto() == idProduto) {
+                return produto;
+            }
+        }
+
+        return null;
     }
 
     private void adicionarProdutoAoPedido(Produto produto) {

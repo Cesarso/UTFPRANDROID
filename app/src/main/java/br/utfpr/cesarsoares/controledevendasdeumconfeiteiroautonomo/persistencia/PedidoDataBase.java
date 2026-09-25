@@ -16,7 +16,7 @@ import br.utfpr.cesarsoares.controledevendasdeumconfeiteiroautonomo.utils.Conver
                 Pedido.class,
                 ItemPedidoEntity.class
         },
-        version = 1,
+        version = 2,
         exportSchema = true
 )
 @TypeConverters(Converters.class)
@@ -37,11 +37,12 @@ public abstract class PedidoDataBase extends RoomDatabase {
                 if (INSTANCE == null) {
 
                     INSTANCE = Room.databaseBuilder(
-                                    context,
+                                    context.getApplicationContext(),
                                     PedidoDataBase.class,
                                     "pedido.db"
                             )
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
